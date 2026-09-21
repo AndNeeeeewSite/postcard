@@ -1,19 +1,18 @@
 Музыка на сайте
 ================
 
-J. S. Bach — Prelude No. 1 in C major, BWV 846
-(The Well-Tempered Clavier, Book 1)
-Исполнитель: Kimiko Ishizaka (фортепиано)
+Fryderyk Chopin — Grande valse brillante in E-flat major, Op. 18 (фортепиано)
+Запись: проект Musopen «The Complete Chopin Collection» (Set Chopin Free).
 
 Лицензия записи: CC0 1.0 Universal (Public Domain Dedication) — можно свободно использовать
-и распространять без указания авторства. Само сочинение — общественное достояние.
-Указание авторства не требуется, но здесь оставлено из уважения к исполнительнице.
+и распространять без указания авторства. Само сочинение (Шопен, 1834) — общественное достояние.
+Указание авторства не требуется, но здесь оставлено из уважения к исполнителю и проекту.
 
 Источники:
-  https://archive.org/details/bach-well-tempered-clavier-book-1
-  https://commons.wikimedia.org/wiki/File:Kimiko_Ishizaka_-_Bach_-_Well-Tempered_Clavier,_Book_1_-_01_Prelude_No._1_in_C_major,_BWV_846.ogg
-  https://welltemperedclavier.org
+  https://archive.org/details/musopen-chopin
+  https://commons.wikimedia.org/wiki/File:Grande_Valse_Brilliante_Op.18_In_E_flat_major.mp3
+  https://musopen.org
 
-Что сделано с файлом music.mp3: громкость выровнена до -29 LUFS (исходная запись очень тихая, около -31),
-добавлены плавное начало и конец, удалена встроенная обложка, перекодировано в MP3 128 кбит/с.
+Что сделано с файлом music.mp3: добавлена мягкая компрессия (чтобы фон звучал ровно),
+громкость выровнена до -29 LUFS, добавлены плавное начало и конец, перекодировано в MP3 128 кбит/с.
 Чтобы заменить музыку, положите свой файл под именем music.mp3 в эту папку.
