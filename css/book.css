@@ -108,12 +108,12 @@
 .cover-front .emblem {
   position: absolute;
   left: 50%;
-  top: 51%;
-  height: 38%;
+  top: 54%;
+  height: 43%;
   width: auto;
+  max-width: 70%;
   transform: translate(-50%, -50%);
   overflow: visible;
-  filter: drop-shadow(0 2px 2px rgba(120, 60, 20, .22));
 }
 
 .cover-back {
@@ -181,3 +181,32 @@
   white-space: nowrap;
 }
 .c-orn { display: block; width: calc(var(--pw) * .24); height: auto; margin: 0 auto calc(var(--pw) * .018); }
+
+/* восклицательный знак в приветствии */
+.c-bang { font-style: normal; color: #c4552f; margin-left: .03em; }
+
+/* ───────── Торт на обложке: мерцание пламени и искры ───────── */
+.c-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: c-flicker 1.7s ease-in-out infinite;
+}
+.c-f2 { animation-duration: 2.1s; }
+.c-f3 { animation-duration: 1.9s; }
+.c-glow { animation: c-glow 2.2s ease-in-out infinite; }
+.c-spark { opacity: 0; transform-origin: 0 0; animation: c-twinkle 3.4s ease-in-out infinite; }
+@keyframes c-flicker {
+  0%, 100% { transform: scale(1, 1) rotate(-1.2deg); }
+  22% { transform: scale(.93, 1.07) rotate(1.6deg); }
+  48% { transform: scale(1.05, .95) rotate(-.6deg); }
+  74% { transform: scale(.96, 1.05) rotate(1.9deg); }
+}
+@keyframes c-glow { 0%, 100% { opacity: .78; } 50% { opacity: 1; } }
+@keyframes c-twinkle {
+  0%, 100% { opacity: 0; transform: scale(.3); }
+  50% { opacity: .95; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c-flame, .c-glow, .c-spark { animation: none; }
+  .c-spark { opacity: .8; }
+}

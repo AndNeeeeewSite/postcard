@@ -42,6 +42,7 @@
   B.open = async function () {
     if (B.state !== 'closed') return;
     B.state = 'opening';
+    if (window.Music) window.Music.start();          // прямо из клика — иначе браузер не даст включить звук
     B.stopIdle();
     B.hintEl.classList.remove('on');
     B.hintEl.classList.add('off');
@@ -74,6 +75,7 @@
     if (B.state !== 'reading') return;
     fromP = fromP || 0;
     B.state = 'closing';
+    if (window.Music) window.Music.stop();
     B.busy = true;
     B.stopWriting();
     B.cancelDrag();

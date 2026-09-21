@@ -102,6 +102,7 @@
 
   B.bind();
   B.bindInput();
+  if (window.Music) window.Music.init();
   relayout();
   // если страницу загрузили в скрытой вкладке (размер окна 0) — ждём, пока появится размер
   const poll = setInterval(() => { if (ready) clearInterval(poll); else relayout(); }, 250);

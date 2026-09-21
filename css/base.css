@@ -108,3 +108,43 @@ body {
 .hint.on { opacity: .82; animation: breathe 3.6s ease-in-out infinite; }
 .hint.off { opacity: 0; animation: none; transition: opacity .45s ease; }
 @keyframes breathe { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
+
+/* ───────── Кнопка музыки: появляется после открытия открытки ───────── */
+.sound {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  z-index: 20;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(160, 110, 50, .32);
+  border-radius: 50%;
+  background: rgba(255, 247, 230, .5);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  color: var(--ink-soft);
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(.85);
+  pointer-events: none;
+  transition: opacity .9s ease, transform .9s ease, background .25s ease;
+  -webkit-appearance: none;
+}
+.sound.on { opacity: .82; transform: none; pointer-events: auto; }
+.sound.on:hover { opacity: 1; background: rgba(255, 247, 230, .85); }
+.sound:focus-visible { outline: 2px solid rgba(207, 90, 59, .7); outline-offset: 2px; }
+.sound svg { width: 22px; height: 22px; }
+.sound .sp { fill: currentColor; }
+.sound .w1, .sound .w2, .sound .x {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  transition: opacity .25s ease;
+}
+.sound .x { opacity: 0; }
+.sound.muted .w1, .sound.muted .w2 { opacity: 0; }
+.sound.muted .x { opacity: 1; }
