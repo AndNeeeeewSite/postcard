@@ -1,0 +1,183 @@
+/* ───────── Книга: геометрия и 3D ───────── */
+.tilt {
+  position: absolute;
+  inset: 0;
+  perspective: calc(var(--pw) * 4.2);
+}
+
+.book {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--pw);
+  height: var(--ph);
+  margin: calc(var(--ph) / -2) 0 0 calc(var(--pw) / -2);
+  perspective: calc(var(--pw) * 3.4);
+  transform-origin: 50% 50%;
+}
+
+/* лист вращается вокруг левого края (корешка) */
+.leaf {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  outline: none;
+}
+.leaf[hidden] { display: none; }
+
+.face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.face.back { transform: rotateY(180deg); }
+
+/* ───────── Бумага ───────── */
+.paper {
+  background-color: var(--paper);
+  background-image:
+    var(--grain),
+    var(--mottle),
+    radial-gradient(95% 75% at 30% 18%, rgba(255, 255, 255, .6), transparent 62%),
+    linear-gradient(180deg, rgba(198, 146, 84, .04), rgba(198, 146, 84, .15));
+}
+
+/* толщина листа и лёгкая тень по краям */
+.front { border-radius: 1px 5px 5px 1px; box-shadow: 0 0 0 .5px rgba(120, 76, 36, .28), 0 1px 2px rgba(74, 36, 12, .18); }
+.back  { border-radius: 5px 1px 1px 5px; box-shadow: 0 0 0 .5px rgba(120, 76, 36, .28), 0 1px 2px rgba(74, 36, 12, .18); }
+
+/* сгиб у корешка: справа-страница темнеет слева, левая — справа */
+.front::before,
+.back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 11%;
+  pointer-events: none;
+  z-index: 3;
+}
+.front::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(96, 52, 20, .3), rgba(96, 52, 20, .1) 38%, transparent);
+}
+.back::before {
+  right: 0;
+  background: linear-gradient(270deg, rgba(96, 52, 20, .3), rgba(96, 52, 20, .1) 38%, transparent);
+}
+
+/* затемнение листа при повороте (управляется из JS через --shade) */
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--shade, 0);
+  z-index: 6;
+}
+.front > .shade { background: linear-gradient(90deg, rgba(58, 28, 8, .12), rgba(58, 28, 8, .62)); }
+.back  > .shade { background: linear-gradient(270deg, rgba(58, 28, 8, .12), rgba(58, 28, 8, .62)); }
+
+/* тень, которую отбрасывает переворачиваемый лист на лежащий под ним */
+.under {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--under, 0);
+  background: linear-gradient(90deg, rgba(58, 28, 8, .55), rgba(58, 28, 8, .12) 55%, transparent);
+  z-index: 5;
+}
+
+/* ───────── Обложка ───────── */
+.cover-front {
+  background-color: #f7e6c9;
+}
+/* тиснёная золотая рамка */
+.cover-front::after {
+  content: '';
+  position: absolute;
+  inset: 4.2%;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, #dfb96d, #a8772b 48%, #e9cf94) 1;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 .5px 0 rgba(255, 255, 255, .6));
+}
+.cover-front .emblem {
+  position: absolute;
+  left: 50%;
+  top: 51%;
+  height: 38%;
+  width: auto;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(120, 60, 20, .22));
+}
+
+.cover-back {
+  background-color: #f8ead0;
+}
+
+/* закрытая открытка — кликабельна, с аккуратным фокусом для клавиатуры */
+.leaf[role="button"] { cursor: pointer; }
+.leaf[role="button"]:focus-visible .cover-front {
+  box-shadow: 0 0 0 3px rgba(207, 90, 59, .55), 0 0 0 .5px rgba(120, 76, 36, .28);
+}
+
+/* ───────── Изгиб листа при перелистывании (см. js/book-bend.js) ───────── */
+.bend { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
+.seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+}
+.sface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.sback { transform: rotateY(180deg); }
+.slice { position: absolute; top: 0; height: 100%; box-shadow: none !important; }
+.sshade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(58, 28, 8, var(--s0, 0)), rgba(58, 28, 8, var(--s1, 0)));
+}
+
+/* ───────── Надпись на обложке ───────── */
+.c-head, .c-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .9s ease .1s;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .65), 0 2px 3px rgba(120, 60, 20, .12);
+}
+.fonts-ready .c-head, .fonts-ready .c-foot { opacity: 1; }   /* появляется, когда шрифт загружен */
+
+.c-head {
+  top: 9.5%;
+  font-size: calc(var(--pw) * .1);
+  font-weight: 400;
+  line-height: 1.06;
+  color: var(--ink);
+}
+.c-head span { display: block; }
+
+.c-foot { bottom: 10%; color: #b5502f; }
+.c-name {
+  font-size: calc(var(--pw) * .07);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.c-orn { display: block; width: calc(var(--pw) * .24); height: auto; margin: 0 auto calc(var(--pw) * .018); }

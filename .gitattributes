@@ -1,2 +1,8 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# единые переводы строк (иначе на Windows git ругается на CRLF)
+* text=auto eol=lf
+
+# бинарные файлы не трогаем
+*.woff2 binary
+*.png binary
+*.jpg binary
+*.ico binary

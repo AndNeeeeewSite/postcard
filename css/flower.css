@@ -1,0 +1,58 @@
+/* ───────── Финальная страница: цветок ───────── */
+.bloom {
+  position: absolute;
+  inset: calc(var(--f, 20px) + 8px);
+  z-index: 2;
+  pointer-events: none;
+}
+.bloom svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* исходное состояние — «чистый лист» */
+.bloom .glow   { opacity: 0; }
+.bloom .stem   { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.bloom .lf-in  { transform-origin: 0 0; transform: scale(0); opacity: 0; }
+.bloom .pt-in  { transform-origin: 0 0; transform: scale(.08); opacity: 0; }
+.bloom .pt-body { stroke-dasharray: 1; stroke-dashoffset: 1; fill-opacity: 0; }
+.bloom .pt-vein { opacity: 0; }
+.bloom .ct     { transform-origin: 0 0; transform: scale(0); }
+.bloom .spark  { opacity: 0; transform-origin: 0 0; }
+
+/* ── прорисовка ── */
+.bloom.play .glow  { animation: b-glow 3.2s ease 1.4s forwards; }
+.bloom.play .stem  { animation: b-draw 1.9s cubic-bezier(.4, .1, .3, 1) .1s forwards; }
+.bloom.play .lf-in { animation: b-leaf 1.15s cubic-bezier(.2, .8, .25, 1) var(--d) forwards; }
+.bloom.play .pt-in { animation: b-unfurl 1.35s cubic-bezier(.2, .8, .25, 1) var(--d) forwards; }
+.bloom.play .pt-body {
+  animation: b-draw 1.25s ease var(--d) forwards, b-fill 1s ease calc(var(--d) + .3s) forwards;
+}
+.bloom.play .pt-vein { animation: b-fade .8s ease calc(var(--d) + .9s) forwards; }
+.bloom.play .ct    { animation: b-pop .9s cubic-bezier(.2, .9, .3, 1) 4.7s forwards; }
+
+/* ── покой: лёгкое покачивание и мерцание ── */
+.bloom.play .sway  { transform-origin: 200px 560px; animation: b-sway 8s ease-in-out 6s infinite; }
+.bloom.play .spark { animation: b-twinkle 3.6s ease-in-out calc(5.4s + var(--d)) infinite; }
+
+/* повторный показ: сразу готовый цветок (мерцание и покачивание остаются) */
+.bloom.instant .glow { opacity: 1; animation: none !important; }
+.bloom.instant .stem { stroke-dashoffset: 0; animation: none !important; }
+.bloom.instant .lf-in,
+.bloom.instant .pt-in,
+.bloom.instant .ct { transform: none; opacity: 1; animation: none !important; }
+.bloom.instant .pt-body { stroke-dashoffset: 0; fill-opacity: 1; animation: none !important; }
+.bloom.instant .pt-vein { opacity: 1; animation: none !important; }
+.bloom.instant.play .sway { animation: b-sway 8s ease-in-out infinite; }
+.bloom.instant.play .spark { animation: b-twinkle 3.6s ease-in-out var(--d) infinite; }
+
+@keyframes b-draw   { to { stroke-dashoffset: 0; } }
+@keyframes b-fill   { to { fill-opacity: 1; } }
+@keyframes b-fade   { to { opacity: 1; } }
+@keyframes b-glow   { to { opacity: 1; } }
+@keyframes b-leaf   { 0% { transform: scale(.05) rotate(-10deg); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes b-unfurl { 0% { transform: scale(.08); opacity: 0; } 22% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes b-pop    { 0% { transform: scale(0); } 70% { transform: scale(1.16); } 100% { transform: scale(1); } }
+@keyframes b-sway   { 0%, 100% { transform: rotate(-.9deg); } 50% { transform: rotate(.9deg); } }
+@keyframes b-twinkle { 0%, 100% { opacity: 0; transform: scale(.25); } 50% { opacity: .95; transform: scale(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom .sway, .bloom .spark { animation: none !important; }
+}
